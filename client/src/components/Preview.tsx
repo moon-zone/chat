@@ -1,11 +1,12 @@
-import axios from "axios";
-import { Avatar, Button, Dropdown, Modal, Spinner } from "flowbite-react";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { useContext, useRef, useState } from "react";
-import { Buffer } from "buffer";
-import { getAllUsers, setAvatar, deleteUser } from "../api";
-import userContext from "../utils/userContext";
-import { Types } from "mongoose";
+import React, { useContext, useRef, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Types } from 'mongoose';
+import { Avatar, Button, Dropdown, Modal, Spinner } from 'flowbite-react';
+import moment from 'moment';
+import { Buffer } from 'buffer';
+import axios from 'axios';
+import { getAllUsers, setAvatar, deleteUser } from '../api';
+import userContext from '../utils/userContext';
 
 interface Props {
   inboxToggle: boolean;
@@ -38,7 +39,7 @@ const Preview: React.FC<Props> = ({
     refetch: refetchAllUsers,
   } = useQuery({
     queryFn: () => getAllUsers(user && user._id),
-    queryKey: ["allUsersData"],
+    queryKey: ['allUsersData'],
     enabled: !!isSuccess,
   });
 
@@ -48,15 +49,15 @@ const Preview: React.FC<Props> = ({
       for (let i = 0; i < 6; i++) {
         const { data } = await axios.get(
           `https://api.multiavatar.com/4645646/${Math.round(
-            Math.random() * 1000
-          )}?apikey=nQluaHjWZ83G95`
+            Math.random() * 1000,
+          )}?apikey=nQluaHjWZ83G95`,
         );
         const buffer = new Buffer(data);
-        imageData.push(buffer.toString("base64"));
+        imageData.push(buffer.toString('base64'));
       }
       setAvatarImage(imageData);
     },
-    queryKey: ["getAvatar"],
+    queryKey: ['getAvatar'],
     refetchOnWindowFocus: false,
   });
 
@@ -72,7 +73,7 @@ const Preview: React.FC<Props> = ({
           ...isAlert,
           isOpen: true,
           title: res.message,
-          type: "success",
+          type: 'success',
         });
       },
       onError: (err: any) =>
@@ -80,9 +81,9 @@ const Preview: React.FC<Props> = ({
           ...isAlert,
           isOpen: true,
           title: err.response.data,
-          type: "failure",
+          type: 'failure',
         }),
-    }
+    },
   );
 
   const handleDeleteUser = useMutation((id: string) => deleteUser(id), {
@@ -93,7 +94,7 @@ const Preview: React.FC<Props> = ({
         ...isAlert,
         isOpen: true,
         title: res.message,
-        type: "success",
+        type: 'success',
       });
     },
     onError: (err: any) =>
@@ -101,14 +102,14 @@ const Preview: React.FC<Props> = ({
         ...isAlert,
         isOpen: true,
         title: err.response.data,
-        type: "failure",
+        type: 'failure',
       }),
   });
 
   return (
     <div
       className={`${
-        inboxToggle ? "hidden" : "flex"
+        inboxToggle ? 'hidden' : 'flex'
       } h-full md:col-span-2 col-span-full md:flex flex-col gap-2 drop-shadow-lg z-10`}
     >
       <div className="w-full basis-20 flex justify-between items-center rounded-tl-lg px-4 shadow-lg">
@@ -184,7 +185,7 @@ const Preview: React.FC<Props> = ({
                       key={index}
                       className={`w-12 h-12 md:w-16 md:h-16 p-[0.2rem] rounded-full cursor-pointer ${
                         index === avatarSelectIndex &&
-                        "border-[0.25rem] border-[#4e0eff]"
+                        'border-[0.25rem] border-[#4e0eff]'
                       }`}
                       onClick={(): void => setAvatarSelectIndex(index)}
                     />
@@ -256,11 +257,11 @@ const Preview: React.FC<Props> = ({
 
       <div
         className={`basis-[80%] flex flex-col overflow-scroll overflow-x-hidden px-3 ${
-          isPreviewLoading && "items-center justify-center"
+          isPreviewLoading && 'items-center justify-center'
         }`}
       >
         {isPreviewLoading ? (
-          <Spinner size={"xl"} />
+          <Spinner size={'xl'} />
         ) : (
           <>
             {allUsers &&
@@ -290,7 +291,7 @@ const Preview: React.FC<Props> = ({
                     </div>
                   </Avatar>
                   <div className="text-gray-500 text-xs py-1">
-                    {element.creation.slice(0, 7)}
+                    {moment(element.createdAt).format('ll').slice(0, -6)}
                   </div>
                 </div>
               ))}
