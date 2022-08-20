@@ -1,4 +1,4 @@
-# Patra
+# Moon
 
 A realtime messaging web app which lets users chat with other users in realtime.
 
@@ -31,7 +31,7 @@ A realtime messaging web app which lets users chat with other users in realtime.
 ## Running Server
 
 ```bash
-  git clone https://github.com/rohanshrestha09/Patra-Nestjs.git
+  git clone https://github.com/moon-zone/chat.git
   cd Patra-Nestjs
   npm install
   npm run start:dev
@@ -40,7 +40,7 @@ A realtime messaging web app which lets users chat with other users in realtime.
 ## Running Client
 
 ```bash
-  git clone https://github.com/rohanshrestha09/Patra-Nestjs.git
+  git clone https://github.com/moon-zone/chat.git
   cd Patra-Nestjs/client
   npm install
   npm run start
